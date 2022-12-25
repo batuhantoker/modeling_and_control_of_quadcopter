@@ -1,5 +1,5 @@
-# modeling_and_control_of_quadcopter
- MATLAB implementation of modeling and control of quadcopter
+# modeling_and_control_of_drone
+ MATLAB implementation of modeling and control of drone
 
 You can use simulink file to modulate simulation characteristics (motion planing, control parameter adjustment)
 Then, the simulation .m file helps you to visualize the outputs of your model and saves it as .mp4 file.
