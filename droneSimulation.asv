@@ -1,0 +1,51 @@
+%%Data simulation code
+figure
+axis vis3d
+xlabel('X axis (m)')
+ylabel('Y axis (m)')
+zlabel('Z axis (m)')
+cam=[1:length(x.data)]
+
+hold off; % Add this line to hold the current plot and allow you to add new lines to it
+
+for i=1:length(x.data)
+    % Remove the line that draws a line from the current point to the origin
+    % line([x.data(i)],[y.data(i)],[z.data(i)])
+
+    % Draw a dashed line from the current point to the previous point
+    if i > 1
+        lim([x.data(i-1) x.data(i)], [y.data(i-1) y.data(i)], [z.data(i-1) z.data(i)], '--', 'Color', 'r');
+    end
+
+    % Plot the current point as a black, asterisk-shaped marker
+    scatter3([x.data(i)],[y.data(i)],[z.data(i)],120,'k','*','DisplayName','Simulated drone','LineWidth',5)
+
+    % Set the x, y, and z limits and enable the grid
+    xlim([0 max(x.data)+1])
+    ylim([0 max(y.data)+1])
+    zlim([0 max(z.data)+1])
+    grid on
+
+    % Set the x, y, and z labels and add a legend
+    xlabel('X axis (m)', 'FontSize', 14);
+    ylabel('Y axis (m)', 'FontSize', 14);
+    zlabel('Z axis (m)', 'FontSize', 14);
+    legend('Simulated drone', 'FontSize', 14)
+
+    % Set the view
+    view(3) %cam(i)*0.4+65,cam(i)*0.6+30
+
+    % Pause for 0.1 seconds before moving on to the next iteration
+    pause(0.1)
+
+    % Add the current frame to the movie object
+    MM(i)=getframe(gcf);
+end
+
+drawnow;
+
+% Create a video writer object and write the movie to a file
+v = VideoWriter('animation.mp4','MPEG-4');
+open(v)
+writeVideo(v,MM)
+close(v)
